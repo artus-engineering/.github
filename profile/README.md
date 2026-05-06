@@ -20,11 +20,11 @@ Individual software from concept to production: web applications, mobile apps, a
 
 ## Tech
 
-Cloud-native applications on **AWS**, **Scaleway**, or our own **Kubernetes** infrastructure. Web and mobile, typically TypeScript and Python. Infrastructure-as-code, automated testing, and clean architecture by default.
+Cloud-native applications on **AWS**, **Scaleway**, or our own **Kubernetes** infrastructure. Web and mobile, typically TypeScript and Python. Infrastructure-as-code, automated testing, and clean architecture & code by default.
 
 ## Our own product
 
-[**Tebuto**](https://tebuto.de) is a SaaS for psychological practices, built using the same approach. Live proof that the method works in production.
+[**Tebuto**](https://tebuto.de) is a SaaS for psychological practices. Recently extended using the same approach. Live proof that the method works in production.
 
 ## Why
 
