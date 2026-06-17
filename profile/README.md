@@ -2,7 +2,7 @@
 
 Custom software for companies and startups. Built faster, at fixed prices, with AI agents as our tools.
 
-[**artus-engineering.de**](https://artus-engineering.de) · [Book a 30-minute call](https://artus-engineering.de/termin)
+[**artus-engineering.de**](https://artus-engineering.de) · [Book a 30-minute call](https://artus-engineering.de/kontakt)
 
 ---
 
