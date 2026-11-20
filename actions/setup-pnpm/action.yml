@@ -1,0 +1,33 @@
+name: Setup cached pnpm
+description: Select the cached pnpm major requested by the project, with an installer fallback.
+inputs:
+  version:
+    description: pnpm major; defaults to packageManager or devEngines.packageManager in package.json.
+    required: false
+  package_json_file:
+    description: Package manifest relative to the checkout.
+    default: package.json
+outputs:
+  bin_dest:
+    description: Directory containing pnpm.
+    value: ${{ steps.cache.outputs.bin || steps.install.outputs.bin_dest }}
+runs:
+  using: composite
+  steps:
+    - name: Select pnpm from the tool cache
+      id: cache
+      shell: bash
+      env:
+        PNPM_REQUESTED_VERSION: ${{ inputs.version }}
+        PNPM_PACKAGE_JSON_FILE: ${{ inputs.package_json_file }}
+      run: python3 "$GITHUB_ACTION_PATH/setup_pnpm.py"
+
+    - name: Install uncached pnpm major
+      id: install
+      if: steps.cache.outputs.hit != 'true'
+      uses: pnpm/action-setup@v6
+      with:
+        version: ${{ steps.cache.outputs.major }}
+        package_json_file: ${{ steps.cache.outputs.bootstrap_manifest }}
+        standalone: true
+        run_install: false

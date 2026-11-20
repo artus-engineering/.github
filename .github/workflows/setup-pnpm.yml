@@ -1,0 +1,34 @@
+name: Setup pnpm
+on:
+  push:
+    branches: [main]
+    paths: ["actions/setup-pnpm/**", ".github/workflows/setup-pnpm.yml"]
+  pull_request:
+    paths: ["actions/setup-pnpm/**", ".github/workflows/setup-pnpm.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        major: [9, 10, 11, 12]
+    steps:
+      - uses: actions/checkout@v7
+      - run: python3 -m unittest discover -s actions/setup-pnpm -p 'test_*.py' -v
+      - name: Declare an older exact patch
+        env:
+          MAJOR: ${{ matrix.major }}
+        run: printf '{"packageManager":"pnpm@%s.0.0"}\n' "$MAJOR" > package.json
+      - uses: ./actions/setup-pnpm
+        with:
+          version: ${{ matrix.major }}
+      - name: Verify major selection and store access
+        env:
+          MAJOR: ${{ matrix.major }}
+        run: |
+          version=$(pnpm --version)
+          test "${version%%.*}" = "$MAJOR"
+          test "$version" != "$MAJOR.0.0"
+          pnpm store path --silent
